@@ -194,7 +194,10 @@ QList<int> DataBase::statisticsWord(const int id)
 
     QSqlQuery query;
     query.prepare(QString("SELECT %1 "
-                          "FROM %2").arg(statisticsWordColumn, tableName));
+                          "FROM %2 "
+                          "WHERE %3 = :id").arg(statisticsWordColumn, tableName, idColumn));
+    query.bindValue(":id", id);
+
     if (query.exec())
     {
         query.next();
@@ -238,11 +241,11 @@ bool DataBase::inserStatisticsWord(const int id, const QList<bool>& correctLette
         qWarning() << QString("Error insert statistics of word. Database %1/%2 is not open").arg(m_locationDb, dbName);
         return false;
     }
+
     QSqlQuery query;
     query.prepare(QString("UPDATE %1 SET "
                           "%2 = :statisticsWord "
                           "WHERE %3 = :id").arg(tableName, statisticsWordColumn, idColumn));
-
     query.bindValue(":id", id);
     QString newStatistics;
     for (int i = 0; i < statistics.length(); i+=2)
