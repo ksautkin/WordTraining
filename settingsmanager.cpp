@@ -31,7 +31,7 @@ void SettingsManager::saveSettings()
     qInfo() << QString("Saved settings: %1").arg(saveKeysValues);
 }
 
-SettingsManager::SettingsManager(QObject *parent)
+SettingsManager::SettingsManager(QObject* parent)
     : QObject{parent}
 {
     loadSettings();
@@ -42,13 +42,14 @@ SettingsManager::~SettingsManager()
     saveSettings();
 }
 
-bool SettingsManager::checkBoxValue(const QString &key)
+bool SettingsManager::checkBoxValue(const QString& key)
 {
     return m_settingValues.value(key, false).toBool();
 }
 
-void SettingsManager::setCheckBoxValue(const QString &key, const QString &value)
+void SettingsManager::setCheckBoxValue(const QString& key, const QString& value)
 {
     m_settingValues.insert(key, value);
     qInfo() << QString("Set check box value: {%1:%2}").arg(key, value);
+    emit settingsUpdated(key);
 }

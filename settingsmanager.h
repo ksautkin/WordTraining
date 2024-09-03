@@ -14,6 +14,9 @@ private:
     void        loadSettings();
     void        saveSettings();
 
+signals:
+    void        settingsUpdated(const QString& settingType);
+
 public:
     explicit    SettingsManager(QObject *parent = nullptr);
     ~SettingsManager();

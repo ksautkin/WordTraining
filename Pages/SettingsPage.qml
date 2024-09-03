@@ -10,8 +10,6 @@ Item
     property color  backgroundColor
     property color  textColor
 
-    signal settingsUpdated(string settingType)
-
     Rectangle
     {
         id: backgroundRect
@@ -58,18 +56,16 @@ Item
 
                 onCheckActivated:
                 {
+                    database.enableRandomSequence(true)
                     if (settingsManager)
                         settingsManager.setCheckBoxValue("randomSequence", true)
-                    database.enableRandomSequence(true)
-                    settingsUpdated("randomSequence")
                 }
 
                 onUncheckActivated:
                 {
+                    database.enableRandomSequence(false)
                     if (settingsManager)
                         settingsManager.setCheckBoxValue("randomSequence", false)
-                    database.enableRandomSequence(false)
-                    settingsUpdated("randomSequence")
                 }
             }
 
@@ -87,14 +83,12 @@ Item
                 {
                     if (settingsManager)
                         settingsManager.setCheckBoxValue("enterCheckWord", true)
-                    settingsUpdated("enterCheckWord")
                 }
 
                 onUncheckActivated:
                 {
                     if (settingsManager)
                         settingsManager.setCheckBoxValue("enterCheckWord", false)
-                    settingsUpdated("enterCheckWord")
                 }
             }
 
@@ -112,14 +106,12 @@ Item
                 {
                     if (settingsManager)
                         settingsManager.setCheckBoxValue("savingStatistics", true)
-                    settingsUpdated("savingStatistics")
                 }
 
                 onUncheckActivated:
                 {
                     if (settingsManager)
                         settingsManager.setCheckBoxValue("savingStatistics", false)
-                    settingsUpdated("savingStatistics")
                 }
             }
 

@@ -60,6 +60,8 @@ Item
 
         Items.ButtonItem
         {
+            id: statisticsButtomItem
+
             Layout.alignment: Qt.AlignCenter
             Layout.fillWidth: true
             Layout.preferredHeight: 60
@@ -68,19 +70,34 @@ Item
             text: qsTr("STATISTICS")
             pointSize: 36
             visible: !addWordModeEnabled && (settingsManager ? settingsManager.checkBoxValue("savingStatistics") : false)
+            property var object
 
             onButtonClicked:
             {
                 var component = Qt.createComponent("StatisticsWordPage.qml");
-                var object = component.createObject(root,
-                                                    {
-                                                        "backgroundColor": "#e23d55",
-                                                        "textColor": "#ffffff",
-                                                        "id": id,
-                                                        "word": word,
-                                                        "wordStatistics": database.statisticsWord(id)
-                                                    });
+                object = component.createObject(root,
+                                                {
+                                                    "backgroundColor": "#e23d55",
+                                                    "textColor": "#ffffff",
+                                                    "id": id,
+                                                    "word": word,
+                                                    "wordStatistics": database.statisticsWord(id)
+                                                });
                 object.anchors.fill = root
+            }
+
+            Connections
+            {
+                target: settingsManager
+                function onSettingsUpdated(settingType)
+                {
+                    if (settingType === "savingStatistics")
+                    {
+                        statisticsButtomItem.visible = settingsManager.checkBoxValue("savingStatistics")
+                        if (!settingsManager.checkBoxValue("savingStatistics") && statisticsButtomItem.object)
+                            statisticsButtomItem.object.destroy()
+                    }
+                }
             }
         }
 

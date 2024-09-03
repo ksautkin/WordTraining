@@ -252,12 +252,16 @@ ApplicationWindow
             backgroundColor: "#e23d55"
             textColor: "#ffffff"
 
-            onSettingsUpdated: (settingType)=>
+            Connections
             {
-                if (settingType === "randomSequence")
-                    guessWord.updateData()
-                else if (settingType === "enterCheckWord")
-                    guessWord.enterCheckWordEnabled()
+                target: settingsManager
+                function onSettingsUpdated(settingType)
+                {
+                    if (settingType === "randomSequence")
+                        guessWord.updateData()
+                    else if (settingType === "enterCheckWord")
+                        guessWord.enterCheckWordEnabled()
+                }
             }
         }
 
