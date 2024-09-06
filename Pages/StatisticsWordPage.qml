@@ -14,6 +14,8 @@ Item
     property string         word
     property list<int>      wordStatistics: []
 
+    signal itemClosed()
+
     Rectangle
     {
         id: backgroundRect
@@ -140,6 +142,7 @@ Item
 
             onButtonClicked:
             {
+                root.itemClosed()
                 root.destroy()
             }
         }

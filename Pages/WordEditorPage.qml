@@ -17,6 +17,9 @@ Item
     signal wordAdded(string word, string meaningWord)
     signal wordUpdated(int id, string word, string meaningWord)
     signal wordDeleted(int id)
+    signal itemClosed()
+    signal statisticsWordPageOpen()
+    signal statisticsWordPageClosed()
 
     Rectangle
     {
@@ -84,6 +87,10 @@ Item
                                                     "wordStatistics": database.statisticsWord(id)
                                                 });
                 object.anchors.fill = root
+
+                object.itemClosed.connect(statisticsWordPageClosed)
+
+                root.statisticsWordPageOpen()
             }
 
             Connections
@@ -95,7 +102,10 @@ Item
                     {
                         statisticsButtomItem.visible = settingsManager.checkBoxValue("savingStatistics")
                         if (!settingsManager.checkBoxValue("savingStatistics") && statisticsButtomItem.object)
+                        {
                             statisticsButtomItem.object.destroy()
+                            root.statisticsWordPageClosed()
+                        }
                     }
                 }
             }
@@ -135,6 +145,7 @@ Item
                         else
                             root.wordUpdated(id, wordTextArea.text, meaningTextArea.text)
 
+                        root.itemClosed()
                         root.destroy()
                     }
                 }
@@ -172,6 +183,7 @@ Item
 
                     onButtonClicked:
                     {
+                        root.itemClosed()
                         root.destroy()
                     }
                 }

@@ -11,7 +11,7 @@ Item
     property color  textColor
     property int    id
 
-    signal nextWord();
+    signal nextWord()
 
     function setWord(word)
     {
@@ -296,7 +296,7 @@ Item
                 {
                     if (text === qsTr("NEXT"))
                     {
-                        nextWord()
+                        root.nextWord()
                         text = qsTr("CHECK")
                         return;
                     }

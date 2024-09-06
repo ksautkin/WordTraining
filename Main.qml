@@ -10,19 +10,24 @@ ApplicationWindow
     visible: true
     title: qsTr("Word Training")
 
-    function updatePageName(currentIndex)
+    function updatePageName(pageName)
+    {
+        pageHeader.text = pageName
+    }
+
+    function getPageName(currentIndex)
     {
         if (currentIndex === 0)
         {
-            pageHeader.text = qsTr("GUESS WORD")
+            return qsTr("GUESS WORD")
         }
         else if (currentIndex === 1)
         {
-            pageHeader.text = qsTr("WORD LIST")
+            return listWords.subPageName ===  "" ? qsTr("WORD LIST") : listWords.subPageName
         }
         else if (currentIndex === 2)
         {
-            pageHeader.text = qsTr("SETTINGS")
+           return qsTr("SETTINGS")
         }
     }
 
@@ -240,9 +245,16 @@ ApplicationWindow
         Pages.ListWordsPage
         {
             id: listWords
+            property string subPageName: ""
 
             backgroundColor: "#e23d55"
             textColor: "#ffffff"
+
+            onOpenSubPage: (subPageName)=>
+            {
+                updatePageName(subPageName)
+                listWords.subPageName = subPageName
+            }
         }
 
         Pages.SettingsPage
@@ -273,7 +285,7 @@ ApplicationWindow
                 listWords.wordUpdated = false                
             }
 
-            updatePageName(currentIndex)
+            updatePageName(getPageName(currentIndex))
         }
 
         Component.onCompleted:
@@ -284,7 +296,7 @@ ApplicationWindow
             if (guessWord.data.length == 0)
                 errorPopup.open()
 
-            updatePageName(currentIndex)
+            updatePageName(getPageName(currentIndex))
         }
     }
 }

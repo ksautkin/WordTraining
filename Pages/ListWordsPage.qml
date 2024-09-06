@@ -12,6 +12,8 @@ Item
     property color  textColor
     property bool   wordUpdated: false
 
+    signal openSubPage(string subPageName)
+
     function onUpdateWord(id, word, meaningWord)
     {
         database.updateWordInTable(id, word, meaningWord)
@@ -31,6 +33,21 @@ Item
         database.deleteWordFromTable(id)
         wordsModel.updateModel()
         wordUpdated = true
+    }
+
+    function onItemClosed()
+    {
+        root.openSubPage(qsTr("WORD LIST"))
+    }
+
+    function onStatisticsWordPageOpen()
+    {
+        root.openSubPage(qsTr("STATISTICS"))
+    }
+
+    function onStatisticsWordPageClosed()
+    {
+        root.openSubPage(qsTr("EDIT WORD"))
     }
 
     Rectangle
@@ -107,6 +124,9 @@ Item
                                                         });
                     object.anchors.fill = root
                     object.wordAdded.connect(onAddWord)
+                    object.itemClosed.connect(onItemClosed)
+
+                    root.openSubPage(qsTr("ADD WORD"))
                 }
             }
         }
@@ -192,6 +212,11 @@ Item
                         object.anchors.fill = root
                         object.wordUpdated.connect(onUpdateWord)
                         object.wordDeleted.connect(onDeleteWord)
+                        object.itemClosed.connect(onItemClosed)
+                        object.statisticsWordPageOpen.connect(onStatisticsWordPageOpen)
+                        object.statisticsWordPageClosed.connect(onStatisticsWordPageClosed)
+
+                        root.openSubPage(qsTr("EDIT WORD"))
                     }
                 }
             }
