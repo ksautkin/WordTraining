@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QCoreApplication::setApplicationName("Word Training");
-    QCoreApplication::setApplicationVersion("1.0.0");
+    QCoreApplication::setApplicationVersion("1.0.1");
 
 #ifndef QT_DEBUG
     logFile.reset(new QFile(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) +
