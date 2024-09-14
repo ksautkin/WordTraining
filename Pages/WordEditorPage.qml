@@ -88,8 +88,11 @@ Item
                                                 });
                 object.anchors.fill = root
 
-                object.itemClosed.connect(statisticsWordPageClosed)
-
+                object.itemClosed.connect(() =>
+                {
+                    root.forceActiveFocus() // for catching Android back button
+                    root.statisticsWordPageClosed()
+                })
                 root.statisticsWordPageOpen()
             }
 
@@ -188,6 +191,21 @@ Item
                     }
                 }
             }
+        }
+    }
+
+    Component.onCompleted:
+    {
+        root.forceActiveFocus() // for catching Android back button
+    }
+
+    Keys.onReleased:    (event)=>
+    {
+        if (event.key === Qt.Key_Back)
+        {
+            root.itemClosed()
+            root.destroy()
+            event.accepted = true
         }
     }
 }

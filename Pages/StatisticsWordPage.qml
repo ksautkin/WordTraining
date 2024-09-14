@@ -147,4 +147,19 @@ Item
             }
         }
     }
+
+    Component.onCompleted:
+    {
+        root.forceActiveFocus() // for catching Android back button
+    }
+
+    Keys.onReleased:    (event)=>
+    {
+        if (event.key === Qt.Key_Back)
+        {
+            root.itemClosed()
+            root.destroy()
+            event.accepted = true
+        }
+    }
 }
