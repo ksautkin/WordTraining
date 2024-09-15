@@ -204,7 +204,7 @@ Item
             Layout.fillHeight: true
             backgroundColor: root.backgroundColor
             textColor: root.textColor
-            enabled: false
+            enabledEdit: false
             pointSize: 36
         }
 

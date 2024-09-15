@@ -11,6 +11,7 @@ Item
     property alias  placeholderText: textArea.placeholderText
     property int    pointSize
     property bool   catchEnterKey: false
+    property bool   enabledEdit: true
 
     signal enterKeyСaught()
 
@@ -38,6 +39,7 @@ Item
             font.pointSize: pointSize
             color: textColor
             placeholderTextColor: Qt.darker(textColor, 1.2)
+            enabled: enabledEdit
             background: Rectangle
             {
                 color: Qt.darker(backgroundColor, 1.1)
