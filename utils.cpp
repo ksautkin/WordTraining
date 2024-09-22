@@ -1,5 +1,8 @@
 #include "utils.h"
 #include <QCoreApplication>
+#include <QFile>
+#include <QUrl>
+#include <QDir>
 
 Utils::Utils(QObject* parent)
     : QObject{parent}
@@ -22,6 +25,54 @@ QList<bool> Utils::wordComparisonByLetters(const QString& enteredWord, const QSt
         else
             correctLetters.append(false);
     }
-    qInfo()<<correctLetters;
     return correctLetters;
+}
+
+QStringList Utils::importVocabulary(QString urlPath)
+{
+    QStringList words;
+    const QUrl url(urlPath);
+    if (url.isLocalFile())
+        urlPath = QDir::toNativeSeparators(url.toLocalFile());
+    QFile file(urlPath);
+
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        qWarning() << QString("Error import file %1. File not exists").arg(urlPath);
+    }
+    else
+    {
+        QTextStream in(&file);
+        while (!in.atEnd())
+        {
+            QString line = in.readLine();
+            for (const QString& word : line.split(";"))
+            {
+                words.append(word);
+            }
+        }
+    }
+    return words; // vocabulary[word, meaning, word, meaning, ...]
+}
+
+void Utils::exportVocabulary(QString urlPath, const QStringList& words)
+{
+    const QUrl url(urlPath);
+    if (url.isLocalFile())
+        urlPath = QDir::toNativeSeparators(url.toLocalFile());
+    QFile file(urlPath);
+
+    if (!file.open(QFile::WriteOnly | QFile::Text))
+    {
+        qWarning() << QString("Error export file %1. File not exists").arg(urlPath);
+    }
+    else
+    {
+        QTextStream out(&file);
+        for (int i = 0; i < words.size(); i += 2)
+        {
+            out << words[i] << ";" << words[i + 1] << "\n";
+        }
+        out.flush();
+    }
 }

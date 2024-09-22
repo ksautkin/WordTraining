@@ -33,10 +33,12 @@ public:
     bool            connectToDataBase();
 
     Q_INVOKABLE  bool           inserWordIntoTable(const QString& word, const QString& meaningWord);
+    Q_INVOKABLE  bool           inserWordsIntoTable(const QStringList& words);
     Q_INVOKABLE  bool           updateWordInTable(const int id, const QString& word, const QString& meaningWord);
     Q_INVOKABLE  bool           deleteWordFromTable(const int id);
     Q_INVOKABLE  QStringList    selectWordsFromTable();
     Q_INVOKABLE  void           enableRandomSequence(bool isRandomSequence);
+    Q_INVOKABLE  QStringList    exportWordsFromTable();
 
     // Stats Word
     Q_INVOKABLE  QList<int>     statisticsWord(const int id);

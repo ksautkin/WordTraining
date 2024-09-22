@@ -95,6 +95,18 @@ bool DataBase::inserWordIntoTable(const QString& word, const QString& meaningWor
     return false;
 }
 
+bool DataBase::inserWordsIntoTable(const QStringList& words)
+{
+    for (int i = 0; i < words.size(); i += 2)
+    {
+        if (!inserWordIntoTable(words[i], words[i + 1]))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 bool DataBase::updateWordInTable(const int id, const QString& word, const QString& meaningWord)
 {
     if (!m_db.isOpen())
@@ -182,6 +194,34 @@ QStringList DataBase::selectWordsFromTable()
 void DataBase::enableRandomSequence(bool isRandomSequence)
 {
     m_isRandomSequence = isRandomSequence;
+}
+
+QStringList DataBase::exportWordsFromTable()
+{
+    if (!m_db.isOpen())
+    {
+        qWarning() << QString("Error exporting rows from table. Database %1/%2 is not open").arg(m_locationDb, dbName);
+        return {};
+    }
+
+    QSqlQuery query;
+    query.prepare(QString("SELECT %1, %2 "
+                          "FROM %3").arg(wordColumn, meaningWordColumn, tableName));
+
+    if (query.exec())
+    {
+        QStringList data;
+        while (query.next())
+        {
+            data.append(query.value(0).toString());
+            data.append(query.value(1).toString());
+        }
+        qInfo() << QString("Selected rows %1 from table").arg(QString::number(data.size()));
+        return data;
+    }
+
+    qWarning() << QString("Error exporting rows from table. %1").arg(query.lastError().text());
+    return {};
 }
 
 QList<int> DataBase::statisticsWord(const int id)

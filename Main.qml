@@ -275,6 +275,11 @@ ApplicationWindow
                         guessWord.enterCheckWordEnabled()
                 }
             }
+
+            onWordsImported:
+            {
+                wordsModel.updateModel()
+            }
         }
 
         onCurrentIndexChanged:
