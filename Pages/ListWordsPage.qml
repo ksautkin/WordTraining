@@ -187,10 +187,13 @@ Item
                     anchors.centerIn: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    width: wordDelegate.width - 20
+                    height: wordDelegate.height
                     text: word
                     font.family: "Helvetica"
                     font.pointSize: 20
                     color: textColor
+                    elide: Label.ElideRight
                 }
 
                 MouseArea
