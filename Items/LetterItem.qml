@@ -31,7 +31,6 @@ Item
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
 
-            text: letterText
             font.family: "Helvetica"
             font.pixelSize: 32
             color: textColor
