@@ -225,7 +225,7 @@ Item
             {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                text: qsTr("Version " + Qt.application.version + "β 2024")
+                text: qsTr("Version " + Qt.application.version + " 2024")
                 font.family: "Helvetica"
                 font.pointSize: 16
                 color: root.textColor

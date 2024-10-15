@@ -42,11 +42,11 @@ set_property(TARGET WordTraining APPEND PROPERTY
 )
 
 set_property(TARGET WordTraining PROPERTY
-    QT_ANDROID_VERSION_NAME "1.0.0"
+    QT_ANDROID_VERSION_NAME "1.1.0"
 )
 
 set_property(TARGET WordTraining PROPERTY
-    QT_ANDROID_VERSION_CODE 1
+    QT_ANDROID_VERSION_CODE 3
 )
 
 set_target_properties(WordTraining PROPERTIES
