@@ -71,8 +71,15 @@ void Utils::exportVocabulary(QString urlPath, const QStringList& words)
         QTextStream out(&file);
         for (int i = 0; i < words.size(); i += 2)
         {
-            out << words[i] << ";" << words[i + 1] << "\n";
+            QString meaningWord = words[i + 1];
+            meaningWord.replace(QChar('\n'), QChar(' '), Qt::CaseInsensitive);
+            out << words[i] << ";" << meaningWord << "\n";
         }
         out.flush();
     }
+}
+
+bool Utils::checkFileFormat(QString urlPath, QString format)
+{
+    return QFileInfo(urlPath).fileName().endsWith(format, Qt::CaseInsensitive);
 }

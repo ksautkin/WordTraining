@@ -13,6 +13,76 @@ Item
 
     signal wordsImported()
 
+    Popup
+    {
+        id: errorPopup
+
+        anchors.centerIn: parent
+        width: parent.width - 20
+        height: 250
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+        background: Rectangle
+        {
+            color: "#e23d55"
+            border.color: Qt.darker("#e23d55", 1.2)
+            border.width: 2
+            radius: 4
+        }
+
+        ColumnLayout
+        {
+            anchors.fill: parent
+            spacing: 10
+
+            Text
+            {
+                Layout.maximumWidth: parent.width
+                Layout.alignment: Qt.AlignCenter
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                text: qsTr("NEED CSV FORMAT!")
+                font.family: "Helvetica"
+                font.pointSize: 24
+                color: "#ffffff"
+                wrapMode: Text.WordWrap
+            }
+
+            Button
+            {
+                Layout.alignment: Qt.AlignCenter
+                Layout.preferredWidth: 180
+                Layout.preferredHeight: 60
+                flat: true
+                down: false
+
+                contentItem: Text
+                {
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    text: qsTr("OK")
+                    font.family: "Helvetica"
+                    font.pointSize: 36
+                    color: "#ffffff"
+                }
+
+                background: Rectangle
+                {
+                    color: Qt.darker("#e23d55", 1.1)
+                    border.color: Qt.darker("#e23d55", 1.2)
+                    border.width: 2
+                    radius: 4
+                }
+
+                onClicked:
+                {
+                    errorPopup.close()
+                }
+            }
+        }
+    }
+
     Rectangle
     {
         id: backgroundRect
@@ -129,17 +199,15 @@ Item
                 Layout.fillWidth: true
             }
 
-            RowLayout
+            ColumnLayout
             {
                 id: buttonsRow
 
-                Layout.alignment: Qt.AlignHCenter
                 spacing: 10
 
                 Items.ButtonItem
                 {
-                    Layout.alignment: Qt.AlignCenter
-                    Layout.preferredWidth: 180
+                    Layout.fillWidth: true
                     Layout.preferredHeight: 60
                     backgroundColor: root.backgroundColor
                     textColor: root.textColor
@@ -151,13 +219,19 @@ Item
                         id: fileDialogImport
                         fileMode: FileDialog.OpenFile
                         title: qsTr("Open file")
-                        nameFilters: [ qsTr("Import file (*.csv)") ]
 
                         onAccepted:
                         {
-                            if (database.inserWordsIntoTable(utils.importVocabulary(fileDialogImport.selectedFile)))
+                            if (utils.checkFileFormat(fileDialogImport.selectedFile, "csv"))
                             {
-                                wordsImported()
+                                if (database.inserWordsIntoTable(utils.importVocabulary(fileDialogImport.selectedFile)))
+                                {
+                                    wordsImported()
+                                }
+                            }
+                            else
+                            {
+                                errorPopup.open()
                             }
                         }
                     }
@@ -170,8 +244,7 @@ Item
 
                 Items.ButtonItem
                 {
-                    Layout.alignment: Qt.AlignCenter
-                    Layout.preferredWidth: 180
+                    Layout.fillWidth: true
                     Layout.preferredHeight: 60
                     backgroundColor: root.backgroundColor
                     textColor: root.textColor
@@ -183,11 +256,17 @@ Item
                         id: fileDialogExport
                         fileMode: FileDialog.SaveFile
                         title: qsTr("Save file")
-                        nameFilters: [ qsTr("Export file (*.csv)") ]
 
                         onAccepted:
                         {
-                            utils.exportVocabulary(fileDialogExport.selectedFile, database.exportWordsFromTable())
+                            if (utils.checkFileFormat(fileDialogExport.selectedFile, "csv"))
+                            {
+                                utils.exportVocabulary(fileDialogExport.selectedFile, database.exportWordsFromTable())
+                            }
+                            else
+                            {
+                                errorPopup.open()
+                            }
                         }
                     }
 
