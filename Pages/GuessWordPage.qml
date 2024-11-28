@@ -23,6 +23,7 @@ Item
         lettersModel.word = word
         wordTextArea.clear()
         wordTextArea.enabled = true
+        lettersListView.positionViewAtIndex(0, ListView.Beginning)
     }
 
     function setMeaningWord(meaningWord)
