@@ -11,17 +11,18 @@ Utils::Utils(QObject* parent)
 
 bool Utils::stringComparison(const QString& enteredWord, const QString& word)
 {
-    return QString::compare(enteredWord.trimmed(), word, Qt::CaseInsensitive) == 0;
+    return QString::compare(enteredWord.trimmed(), word.trimmed(), Qt::CaseInsensitive) == 0;
 }
 
 QList<bool> Utils::wordComparisonByLetters(const QString& enteredWord, const QString& word)
 {
     QList<bool> correctLetters;
     QString enteredWordTrimmed = enteredWord.trimmed();
-    for (int i = 0; i < word.length(); ++i)
+    QString wordTrimmed = word.trimmed();
+    for (int i = 0; i < wordTrimmed.length(); ++i)
     {
         if (i < enteredWordTrimmed.length())
-            correctLetters.append(enteredWordTrimmed[i].toLower() == word[i].toLower());
+            correctLetters.append(enteredWordTrimmed[i].toLower() == wordTrimmed[i].toLower());
         else
             correctLetters.append(false);
     }
@@ -79,7 +80,7 @@ void Utils::exportVocabulary(QString urlPath, const QStringList& words)
     }
 }
 
-bool Utils::checkFileFormat(QString urlPath, QString format)
+bool Utils::checkFileFormat(const QString& urlPath, const QString& format)
 {
-    return QFileInfo(urlPath).fileName().endsWith(format, Qt::CaseInsensitive);
+    return QFileInfo(QDir::toNativeSeparators(urlPath)).fileName().endsWith(format, Qt::CaseInsensitive);
 }

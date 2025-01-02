@@ -1,5 +1,6 @@
 #include "database.h"
 #include <QFile>
+#include <QDir>
 #include <QSqlQuery>
 #include <QSqlError>
 
@@ -36,7 +37,7 @@ bool DataBase::openDataBase()
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setHostName(dbHostname);
-    m_db.setDatabaseName(QString("%1/%2").arg(m_locationDb, dbName));
+    m_db.setDatabaseName(QDir::toNativeSeparators(QString("%1/%2").arg(m_locationDb, dbName)));
     if (m_db.open())
     {
         qInfo() << QString("Database %1/%2 is open").arg(m_locationDb, dbName);
@@ -60,7 +61,7 @@ DataBase::DataBase(const QString& locationDb, QObject* parent)
 
 bool DataBase::connectToDataBase()
 {
-    if (QFile(QString("%1/%2").arg(m_locationDb, dbName)).exists())
+    if (QFile(QDir::toNativeSeparators(QString("%1/%2").arg(m_locationDb, dbName))).exists())
         return openDataBase();
 
     qWarning() << QString("Database %1/%2 doesn't exist").arg(m_locationDb, dbName);

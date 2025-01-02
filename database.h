@@ -30,6 +30,10 @@ private:
 
 public:
     explicit        DataBase(const QString& locationDb, QObject* parent = nullptr);
+    ~DataBase()
+    {
+        closeDataBase();
+    }
     bool            connectToDataBase();
 
     Q_INVOKABLE  bool           inserWordIntoTable(const QString& word, const QString& meaningWord);

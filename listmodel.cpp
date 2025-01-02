@@ -1,7 +1,7 @@
 #include "listmodel.h"
 #include "database.h"
 
-ListModel::ListModel(QObject *parent)
+ListModel::ListModel(QObject* parent)
     : QSqlQueryModel{parent}
 {
     updateModel();

@@ -18,7 +18,7 @@ signals:
     void        settingsUpdated(const QString& settingType);
 
 public:
-    explicit    SettingsManager(QObject *parent = nullptr);
+    explicit    SettingsManager(QObject* parent = nullptr);
     ~SettingsManager();
 
     Q_INVOKABLE bool    checkBoxValue(const QString& key);

@@ -15,5 +15,5 @@ public:
     Q_INVOKABLE QStringList importVocabulary(QString urlPath);
     Q_INVOKABLE void        exportVocabulary(QString urlPath, const QStringList& words);
 
-    Q_INVOKABLE bool        checkFileFormat(QString urlPath, QString format);
+    Q_INVOKABLE bool        checkFileFormat(const QString& urlPath, const QString& format);
 };

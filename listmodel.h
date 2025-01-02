@@ -17,7 +17,7 @@ public:
     };
 
 public:
-    explicit                 ListModel(QObject *parent = nullptr);
+    explicit                 ListModel(QObject* parent = nullptr);
     QVariant                 data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
     Q_INVOKABLE int          count();

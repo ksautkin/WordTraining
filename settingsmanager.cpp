@@ -1,10 +1,11 @@
 #include "settingsmanager.h"
 #include <QStandardPaths>
 #include <QSettings>
+#include <QDir>
 
 void SettingsManager::loadSettings()
 {
-    const QString settingsFilePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/settings.ini";
+    const QString settingsFilePath = QDir::toNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/settings.ini");
     const QSettings settingsFile(settingsFilePath, QSettings::IniFormat);
     const QStringList keys = settingsFile.allKeys();
 
@@ -19,7 +20,7 @@ void SettingsManager::loadSettings()
 
 void SettingsManager::saveSettings()
 {
-    const QString settingsFilePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/settings.ini";
+    const QString settingsFilePath = QDir::toNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/settings.ini");
     QSettings settingsFile(settingsFilePath, QSettings::IniFormat);
 
     QString saveKeysValues;
