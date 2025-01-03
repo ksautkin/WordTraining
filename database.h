@@ -4,9 +4,13 @@
 #include <QSqlDatabase>
 #include <QString>
 
+class TestCore;
+
 class DataBase : public QObject
 {
     Q_OBJECT
+
+    friend class TestCore;
 
 private:
     QSqlDatabase            m_db;
