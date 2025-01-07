@@ -14,6 +14,8 @@ Item
             rotationAnimation.start()
     }
 
+    signal rotationAnimationFinished()
+
     Rectangle
     {
         id: backgroundRect
@@ -68,6 +70,11 @@ Item
                 property: "opacity"
                 from: 0; to: 1
                 duration: 250
+            }
+
+            onFinished:
+            {
+                rotationAnimationFinished()
             }
         }
 

@@ -9,6 +9,7 @@ Item
     property color  textColor
     property alias  text: textField.text
     property alias  placeholderText: textField.placeholderText
+    property alias  focusTextField: textField.focus
     property int    pointSize
 
 

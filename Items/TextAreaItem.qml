@@ -9,6 +9,7 @@ Item
     property color  textColor
     property alias  text: textArea.text
     property alias  placeholderText: textArea.placeholderText
+    property alias  focusTextArea: textArea.focus
     property int    pointSize
     property bool   catchEnterKey: false
     property bool   enabledEdit: true
